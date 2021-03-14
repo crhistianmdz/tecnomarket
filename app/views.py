@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect,get_object_or_404
 from .models import Producto, Marca, Contacto
-from .forms import AgregarProdctoForm, ContactoForm 
+from .forms import ProductoForm, ContactoForm 
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -29,10 +30,10 @@ def galeria(request):
 
 def agregar_producto(request):
     data={
-        'form': AgregarProdctoForm,
+        'form': ProductoForm,
     }
     if request.method=='POST':
-        formulario=AgregarProdctoForm(data=request.POST,files=request.FILES)
+        formulario=ProductoForm(data=request.POST,files=request.FILES)
         if formulario.is_valid():
             try:
                 formulario.save()
@@ -51,3 +52,27 @@ def listar_productos(request):
     }
 
     return render(request,'app/producto/listar.html', data)
+
+def modificar_producto(request, id):
+    producto=get_object_or_404(Producto,id=id)
+    data={
+        'form': ProductoForm(instance=producto)
+    }
+    if request.method=='POST':
+        formulario = ProductoForm(data=request.POST, instance=producto ,files=request.FILES)
+        if formulario.is_valid():
+            try:
+                formulario.save()
+                messages.success(request,'modificado con exito')
+                #data['mensaje']='Producto editado con exito'
+                return redirect(to='listar_productos')
+            except:
+                data['form']=formulario
+
+    return render(request,'app/producto/modificar.html', data)
+
+def eliminar_producto(request,id):
+    producto=get_object_or_404(Producto,id=id)
+    producto.delete()
+    messages.success(request,'eliminado con exito')
+    return redirect(to="listar_productos")

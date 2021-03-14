@@ -10,7 +10,7 @@ class ContactoForm(forms.ModelForm):
         #fields=["nombre","correo","tipo_consulta","mensaje","avisos"]
         fields='__all__'
 
-class AgregarProdctoForm(forms.ModelForm):
+class ProductoForm(forms.ModelForm):
     class Meta:
         model=Producto
         fields='__all__'

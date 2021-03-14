@@ -1,5 +1,32 @@
 {% extends 'app/base.html' %}
 
+{% block js %}
+
+    <script>
+        function eliminarProducto(id){
+            Swal.fire({
+                'title':'Estas Seguro',
+                'text':'esta accion no se puede revertir',
+                'icon':'question',
+                'showCancelButton':true,
+                'cancelButtonText':'No, cancelar',
+                'confirmButtonText':'Si, Eliminar',
+                'reverseButtons':true
+            })
+            .then(function(result){
+                if(result.isConfirmed){
+                    window.location.href='/eliminar-producto/'+id
+                }
+            })
+        }
+    </script>
+    
+{% endblock %}
+sdasda
+
+
+
+
 {% block content %}
 {% load humanize %}
 <br>
@@ -13,6 +40,7 @@
                 <th>Precio</th>
                 <th>Marca</th>
                 <th>es nuevo?</th>
+                <th>opciones</th>
             </tr>
             {% for p in productos %}
             <tr>
@@ -25,6 +53,10 @@
                     {%else %}
                         NO
                     {%endif %}
+                </td>
+                <td>
+                    <a href="{%url 'modificar_producto' p.id%} " class="btn btn-info btn-sm">Modificar</a> &nbsp; 
+                    <a href="# " onclick="eliminarProducto({{ p.id }})" class="btn btn-danger btn-sm" >Eliminar</a>
                 </td>
             </tr>
             {%endfor%}
