@@ -37,6 +37,7 @@
                         <li><a href="{% url 'logout' %} ">Cerrar Sesion</a> </li>
                         <li><a href="#">@{{user.username}} </a> </li>
                     {% else %}
+                        <li><a href="{%url 'registro' %} ">Registrar</a> </li>
                         <li><a href="{% url 'login' %} ">Iniciar Sesion</a> </li>
                     {% endif %}
                 </ul>
