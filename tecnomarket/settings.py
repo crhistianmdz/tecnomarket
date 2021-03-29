@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'colorfield',
     'django.contrib.humanize',
-    'crispy_forms'
+    'crispy_forms',
+    'rest_framework',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 X_FRAME_OPTIONS='SAMEORIGIN' # only if django version >= 3.0
